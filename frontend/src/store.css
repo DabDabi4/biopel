@@ -1,0 +1,202 @@
+/* Заборона горизонтальної прокрутки на всій сторінці */
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow-x: hidden; /* Вимикає горизонтальну прокрутку */
+}
+
+.store-container {
+  font-family: Arial, sans-serif;
+  width: 100vw; /* Займає всю ширину екрану */
+  height: 100vh; /* Займає всю висоту екрану */
+  padding: 20px;
+  overflow-x: hidden; /* Забороняє горизонтальну прокрутку всередині контейнера */
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  text-align: center;
+  color: #2e7d32;
+  margin-bottom: 20px;
+  text-shadow: none;
+}
+
+.login-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-container {
+  display: flex;
+  margin-bottom: 20px;
+  gap: 10px;
+  height: 40px;  /* Зменшено висоту контейнера пошуку */
+  width: 70%;    /* Зменшено ширину контейнера */
+  max-width: 600px; /* Максимальна ширина для пошукової панелі */
+  margin: 0 auto;  
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 8px 16px;
+  background-color: #2e7d32; /* Помаранчевий колір */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.back-button:hover {
+  background-color: #FF4500; /* Трохи темніший відтінок */
+}
+
+.search-filter {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Горизонтальний скрол для списку */
+.additional-container {
+  display: flex;
+  flex-wrap: wrap; /* Додаємо цю властивість для переносу елементів на новий рядок */
+  gap: 20px;
+  padding-bottom: 10px;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+  padding-left: 40px; /* Додає відступ від лівого краю */
+  margin-top: 30px;  /* Додаємо відступ зверху до контейнера з даними */
+}
+
+/* Сортуємо елементи за id */
+.data-div {
+  min-width: 250px;
+  max-width: 250px;
+  height: 40vh; /* Зменшена висота */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  background-color: rgba(46, 125, 50, 0.7); /* Зелений фон з прозорістю */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.data-div:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.data-div img {
+  width: 50%;      /* Картинка займає всю ширину контейнера */
+  height: 40%;    /* Фіксована висота для всіх картинок */
+  object-fit: cover; /* Обрізає зображення, щоб воно заповнювало контейнер */
+  border-radius: 4px; /* Заокруглення кутів */
+  margin: 0 auto;    /* Центрує картинку горизонтально */
+  display: block;    /* Забирає можливі проблеми з inline-елементами */
+}
+
+
+.disabled {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.approved-label {
+  font-weight: bold;
+  color: green;
+  margin-top: 8px;
+}
+
+.button-group {
+  margin-top: 10px;
+}
+
+.remove-button, .approve-button {
+  margin-right: 10px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.text-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.text-content p {
+  margin: 5px 0;
+}
+
+.remove-button {
+  background-color: #e74c3c;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.remove-button:hover {
+  background-color: #c0392b;
+}
+
+
+.top-buttons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.top-button {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+/* Зроблено прозорим фон для порожнього блоку */
+.empty-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 250px;
+  max-width: 250px;
+  height: 40vh;
+  background-color: rgba(245, 245, 245, 0.5); /* Напівпрозорий фон */
+  color: #4CAF50;
+  font-size: 80px;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+}
