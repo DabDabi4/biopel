@@ -73,17 +73,29 @@ const ProfilePage = () => {
   };
 
   const handleRoleChange = async (userId, newRole) => {
-  try {
-    await UserService.updateUser(userId, { role: newRole });
-    const updatedUsers = usersList.map(user =>
-      user.id === userId ? { ...user, role: newRole } : user
-    );
-    setUsersList(updatedUsers);  // оновлюємо стан без перезавантаження
-  } catch (err) {
-    setError(`Помилка оновлення ролі: ${err.message}`);
-  }
-};
+    try {
+      // Оновлення ролі користувача
+      await UserService.updateUser(userId, { role: newRole });
 
+      // Оновлення списку користувачів
+      const updatedUsers = usersList.map(user =>
+        user.id === userId ? { ...user, role: newRole } : user
+      );
+      setUsersList(updatedUsers);
+
+      // Оновлення даних поточного користувача, якщо це поточний користувач
+      if (userData.id === userId) {
+        setUserData(prevData => ({ ...prevData, role: newRole }));
+      }
+
+      // Можна додатково викликати fetchUserData(), якщо потрібно перезавантажити дані користувача
+      // const currentUser = await UserService.getCurrentUser();
+      // setUserData(currentUser);
+
+    } catch (err) {
+      setError(`Помилка оновлення ролі: ${err.message}`);
+    }
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(prev => !prev); // Toggle password visibility
@@ -102,7 +114,6 @@ const ProfilePage = () => {
       <h2>Профіль користувача</h2>
 
       <button className="button button-primary button-back" onClick={goBack}>Назад</button>
-
 
       <div className="profile-section">
         {isEditing ? (
