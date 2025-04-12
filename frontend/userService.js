@@ -84,28 +84,15 @@ export const UserService = {
   localStorage.setItem('currentUser', JSON.stringify(user));
   return user;
 },
-// Отримання користувача з бази за ID
-async getUserById(id) {
-  const { data, error } = await supabase
-    .from('users')
-    .select('*')
-    .eq('id', id)
-    .single();
-
-  if (error) throw error;
-  return data;
-},
 
 // Отримання поточного користувача
 async getCurrentUser() {
+  // Перевіряємо, чи є користувач в localStorage
   const user = JSON.parse(localStorage.getItem('currentUser'));
   if (!user) {
     throw new Error('Користувач не авторизований');
   }
-
-  // Підтягуємо актуальні дані з бази
-  return await this.getUserById(user.id);
+  return user;
 }
-
 
 };
