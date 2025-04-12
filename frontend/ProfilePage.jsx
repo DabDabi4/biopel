@@ -15,16 +15,22 @@ const ProfilePage = () => {
     const fetchUserData = async () => {
       try {
         const currentUser = await UserService.getCurrentUser();
+        
+        // Якщо користувач не знайдений, перенаправляйте на сторінку входу
+        if (!currentUser) {
+          window.location.href = "/loginPage";
+          return;
+        }
+  
         setUserData(currentUser);
         setEditData({
           username: currentUser.username,
           email: currentUser.email,
           password: currentUser.password
         });
-
+  
         if (currentUser.role === 'admin') {
           const allUsers = await UserService.getAllUsers();
-          // Sort users by ID in ascending order
           const sortedUsers = allUsers.sort((a, b) => a.id - b.id);
           setUsersList(sortedUsers);
         }
@@ -34,9 +40,10 @@ const ProfilePage = () => {
         setLoading(false);
       }
     };
-
+  
     fetchUserData();
   }, []);
+  
 
   const handleEditChange = (e) => {
     const { name, value } = e.target;
@@ -67,10 +74,19 @@ const ProfilePage = () => {
     try {
       await UserService.deleteUser(userId);
       setUsersList(usersList.filter(user => user.id !== userId));
+  
+      // Очищення даних користувача з localStorage або cookies
+      if (userToDelete.id === userData.id) {
+        localStorage.removeItem('currentUser'); // Якщо ви використовуєте localStorage
+        // або видалення cookies
+        // document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        window.location.href = "/loginPage"; // Перехід на сторінку входу після видалення
+      }
     } catch (error) {
       setError(`Помилка видалення: ${error.message}`);
     }
   };
+  
 
   const handleRoleChange = async (userId, newRole) => {
     try {
