@@ -56,20 +56,20 @@ const ProfilePage = () => {
   const handleDeleteUser = async (userId) => {
     const userToDelete = usersList.find(user => user.id === userId);
   
-    if (userToDelete && userToDelete.role === 'admin') {
-      alert('Ви не можете видалити іншого адміністратора.');
-      return;
-    }
-  
-    const confirmDelete = window.confirm('Ви впевнені, що хочете видалити цього користувача?');
+    // Запит на підтвердження, якщо користувач намагається видалити себе
+    const confirmDelete = window.confirm(
+      userToDelete.id === userData.id
+        ? 'Ви впевнені, що хочете видалити свій акаунт? Це призведе до виходу з системи.'
+        : 'Ви впевнені, що хочете видалити цього користувача?'
+    );
     if (!confirmDelete) return;
   
     try {
       await UserService.deleteUser(userId);
       setUsersList(usersList.filter(user => user.id !== userId));
   
-      // Очистити локальне сховище після видалення користувача
-      if (userId === userData.id) { // Якщо видаляється поточний авторизований користувач
+      // Якщо видаляється поточний авторизований користувач
+      if (userId === userData.id) {
         localStorage.removeItem("currentUser"); // Очищає все локальне сховище
         setUserData(null); // Очищаємо стан користувача
         window.location.href = "/login"; // Направити на сторінку входу або іншу відповідну сторінку
@@ -78,6 +78,7 @@ const ProfilePage = () => {
       setError(`Помилка видалення: ${error.message}`);
     }
   };
+  
   
 
 
