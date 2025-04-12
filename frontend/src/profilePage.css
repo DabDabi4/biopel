@@ -161,6 +161,32 @@
   border-left: 4px solid #e74c3c;
 }
 
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-container input {
+  flex: 1;
+}
+
+.toggle-password-btn {
+  margin-left: 10px;
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.toggle-password-btn:hover {
+  background-color: #2e7d32;
+}
+
+
 .action-buttons {
   display: flex;
   gap: 10px;

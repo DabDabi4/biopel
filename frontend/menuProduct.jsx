@@ -13,6 +13,14 @@ const MenuProduct = () => {
     imageFile
   } = useMenuProduct();
 
+  const handleNumericInputChange = (event, field) => {
+    const value = event.target.value;
+    // Дозволити тільки цифри і максимальна кількість символів 8
+    if (/^\d{0,8}$/.test(value)) {
+      handleInputChange(event, field);
+    }
+  };
+
   return (
     <div className="product-editor">
       <div className="editor-header">
@@ -62,7 +70,7 @@ const MenuProduct = () => {
               <input 
                 id="product-id" 
                 type="text" 
-                value={product.id} 
+                value={product.id || ''} // Якщо product.id undefined, встановлюємо порожній рядок
                 disabled 
                 className="form-control"
               />
@@ -73,7 +81,7 @@ const MenuProduct = () => {
               <input 
                 id="product-fuel_type" 
                 type="text" 
-                value={product.fuel_type} 
+                value={product.fuel_type || ''} // Якщо product.fuel_type undefined, встановлюємо порожній рядок
                 onChange={handleInputChange} 
                 className="form-control"
               />
@@ -84,8 +92,8 @@ const MenuProduct = () => {
               <input 
                 id="product-calorific_value" 
                 type="text" 
-                value={product.calorific_value} 
-                onChange={handleInputChange} 
+                value={product.calorific_value || ''} // Якщо product.calorific_value undefined, встановлюємо порожній рядок
+                onChange={(e) => handleNumericInputChange(e, 'calorific_value')} 
                 className="form-control"
               />
             </div>
@@ -95,9 +103,10 @@ const MenuProduct = () => {
               <input 
                 id="product-price" 
                 type="text" 
-                value={product.price} 
-                onChange={handleInputChange} 
+                value={product.price || ''} // Якщо product.price undefined, встановлюємо порожній рядок
+                onChange={(e) => handleNumericInputChange(e, 'price')} 
                 className="form-control"
+                maxLength={8} // Обмеження на 8 символів
               />
             </div>
 
@@ -106,7 +115,7 @@ const MenuProduct = () => {
               <input 
                 id="product-supplier" 
                 type="text" 
-                value={product.supplier} 
+                value={product.supplier || ''} // Якщо product.supplier undefined, встановлюємо порожній рядок
                 onChange={handleInputChange} 
                 className="form-control"
               />
@@ -114,13 +123,15 @@ const MenuProduct = () => {
 
             <div className="form-group">
               <label htmlFor="product-availability">Наявність</label>
-              <input 
-                id="product-availability" 
-                type="text" 
-                value={product.availability} 
-                onChange={handleInputChange} 
+              <select
+                id="product-availability"
+                value={product.availability || 'false'} // Якщо product.availability undefined, встановлюємо "false"
+                onChange={(e) => handleInputChange(e)} 
                 className="form-control"
-              />
+              >
+                <option value="true">В наявності</option>
+                <option value="false">Немає в наявності</option>
+              </select>
             </div>
 
             <div className="form-group">
@@ -128,7 +139,7 @@ const MenuProduct = () => {
               <input 
                 id="product-date" 
                 type="text" 
-                value={product.created_at} 
+                value={product.created_at || ''} // Якщо product.created_at undefined, встановлюємо порожній рядок
                 disabled 
                 className="form-control"
               />

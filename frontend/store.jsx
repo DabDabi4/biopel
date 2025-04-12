@@ -52,17 +52,20 @@ const StorePage = () => {
   return (
     <div className="store-container">
       <div className="container">
-        <h1 className="logo" onClick={handleLogoClick}>BIOPEL</h1>
-
-        <div className="top-buttons">
-          <button className="top-button" onClick={handleProfileClick}>
-            Профіль
-          </button>
-          <button className="top-button" onClick={() => navigate('/basket')}>
-            🛒 Кошик
-          </button>
+  
+        <div className="header-container">
+          <h1 className="logo" onClick={handleLogoClick}>BIOPEL</h1>
+  
+          <div className="top-buttons">
+            <button className="top-button" onClick={handleProfileClick}>
+              Профіль
+            </button>
+            <button className="top-button" onClick={() => navigate('/basket')}>
+              🛒 Кошик
+            </button>
+          </div>
         </div>
-
+  
         <div className="search-container">
           <input
             type="text"
@@ -86,7 +89,7 @@ const StorePage = () => {
           </select>
         </div>
       </div>
-
+  
       <div className="additional-container">
         {sortedData.map(item => (
           <div key={item.id} className="data-div" onClick={() => handleProductClick(item)}>
@@ -106,7 +109,7 @@ const StorePage = () => {
             </div>
           </div>
         ))}
-
+  
         {userRole !== 'user' && (
           <div className="data-div empty-block" onClick={handleAddProduct}>
             <p style={{ fontSize: '80px' }}>+</p>
@@ -115,6 +118,7 @@ const StorePage = () => {
       </div>
     </div>
   );
+  
 };
 
 export default StorePage;

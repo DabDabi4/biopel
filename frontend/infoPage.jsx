@@ -13,6 +13,10 @@ const InfoPage = () => {
     navigate('/loginPage');
   };
 
+  const handleShop = () => {
+    navigate('/store'); // Adjust the path as needed
+  };
+
   return (
     <div className="info-page">
       {/* Header with logo and auth buttons */}
@@ -21,6 +25,7 @@ const InfoPage = () => {
         <div className="auth-buttons">
           <button onClick={handleRegister} className="auth-button">Реєстрація</button>
           <button onClick={handleLogin} className="auth-button">Авторизація</button>
+          <button onClick={handleShop} className="auth-button">Магазин</button> {/* Shop Button */}
         </div>
       </header>
 

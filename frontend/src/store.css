@@ -21,6 +21,8 @@ html, body {
   color: #2e7d32;
   margin-bottom: 20px;
   text-shadow: none;
+  cursor: pointer; /* Змінює курсор на "палець" при наведенні */
+  display: inline-block; /* Змінює на inline-block, щоб обмежити область кліку до тексту */
 }
 
 .login-button {
@@ -167,7 +169,7 @@ html, body {
 .top-buttons {
   position: absolute;
   top: 20px;
-  right: 20px;
+  right: 30px;
   display: flex;
   gap: 10px;
 }
@@ -179,6 +181,17 @@ html, body {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+.admin-height {
+  height: 55vh; /* більше висоти для адміна */
+}
+.header-container {
+  justify-content: center; /* Центрує по горизонталі */
+  align-items: center; /* Центрує по вертикалі */
+  margin-bottom: 20px;
+  position: relative;
+  display: flex;
+  width: 100%; /* Встановлюємо ширину на 100%, щоб контейнер займав всю ширину */
 }
 
 

@@ -73,18 +73,17 @@ const ProfilePage = () => {
   };
 
   const handleRoleChange = async (userId, newRole) => {
-    try {
-      await UserService.updateUser(userId, { role: newRole });
-      window.location.reload(); // оновлення сторінки
-      
-      const updatedUsers = usersList.map(user =>
-        user.id === userId ? { ...user, role: newRole } : user
-      );
-      setUsersList(updatedUsers);
-    } catch (err) {
-      setError(`Помилка оновлення ролі: ${err.message}`);
-    }
-  };
+  try {
+    await UserService.updateUser(userId, { role: newRole });
+    const updatedUsers = usersList.map(user =>
+      user.id === userId ? { ...user, role: newRole } : user
+    );
+    setUsersList(updatedUsers);  // оновлюємо стан без перезавантаження
+  } catch (err) {
+    setError(`Помилка оновлення ролі: ${err.message}`);
+  }
+};
+
 
   const togglePasswordVisibility = () => {
     setShowPassword(prev => !prev); // Toggle password visibility

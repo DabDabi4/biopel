@@ -102,7 +102,7 @@ const Basket = () => {
       ) : (
         <div className="additional-container">
           {basketItems.map((item) => (
-            <div key={item.id} className={`data-div ${item.approved ? 'disabled' : ''}`}>
+            <div key={item.id} className={`data-div ${isAdmin ? 'admin-height' : ''} ${item.approved ? 'disabled' : ''}`}>
               <img
                 src={item.fuel_brackets.image_url}
                 alt="Товар"
