@@ -94,8 +94,11 @@ const ProfilePage = () => {
 
       // Оновлення даних поточного користувача, якщо це поточний користувач
       if (userData.id === userId) {
-        setUserData(prevData => ({ ...prevData, role: newRole }));
+        const updatedUser = { ...userData, role: newRole };
+        setUserData(updatedUser);
+        localStorage.setItem("currentUser", JSON.stringify(updatedUser));  // Оновлюємо роль у localStorage
       }
+      
 
       // Можна додатково викликати fetchUserData(), якщо потрібно перезавантажити дані користувача
       // const currentUser = await UserService.getCurrentUser();
