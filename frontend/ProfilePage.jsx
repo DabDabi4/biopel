@@ -98,8 +98,8 @@ const ProfilePage = () => {
       }
 
       // Можна додатково викликати fetchUserData(), якщо потрібно перезавантажити дані користувача
-      // const currentUser = await UserService.getCurrentUser();
-      // setUserData(currentUser);
+       const currentUser = await UserService.getCurrentUser();
+       setUserData(currentUser);
 
     } catch (err) {
       setError(`Помилка оновлення ролі: ${err.message}`);
