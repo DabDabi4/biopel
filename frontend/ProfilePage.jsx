@@ -78,6 +78,8 @@ const ProfilePage = () => {
       setError(`Помилка видалення: ${error.message}`);
     }
   };
+  
+
 
   const handleRoleChange = async (userId, newRole) => {
     try {
@@ -95,9 +97,9 @@ const ProfilePage = () => {
         setUserData(prevData => ({ ...prevData, role: newRole }));
       }
 
-      // Перезавантажуємо дані поточного користувача
-      const currentUser = await UserService.getCurrentUser();
-      setUserData(currentUser);
+      // Можна додатково викликати fetchUserData(), якщо потрібно перезавантажити дані користувача
+       const currentUser = await UserService.getCurrentUser();
+       setUserData(currentUser);
 
     } catch (err) {
       setError(`Помилка оновлення ролі: ${err.message}`);
