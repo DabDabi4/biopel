@@ -54,36 +54,55 @@ const ProfilePage = () => {
   };
 
   const handleDeleteUser = async (userId) => {
-    const userToDelete = usersList.find(user => user.id === userId);
-  
-    if (userToDelete && userToDelete.role === 'admin') {
-      alert('Ви не можете видалити іншого адміністратора.');
-      return;
-    }
-  
-    const confirmDelete = window.confirm('Ви впевнені, що хочете видалити цього користувача?');
-    if (!confirmDelete) return;
-  
-    try {
-      await UserService.deleteUser(userId);
-      setUsersList(usersList.filter(user => user.id !== userId));
-    } catch (error) {
-      setError(`Помилка видалення: ${error.message}`);
-    }
-  };
+  const userToDelete = usersList.find(user => user.id === userId);
 
-  const handleRoleChange = async (userId, newRole) => {
+  if (userToDelete && userToDelete.role === 'admin') {
+    alert('Ви не можете видалити іншого адміністратора.');
+    return;
+  }
+
+  const confirmDelete = window.confirm('Ви впевнені, що хочете видалити цього користувача?');
+  if (!confirmDelete) return;
+
   try {
-    await UserService.updateUser(userId, { role: newRole });
-    const updatedUsers = usersList.map(user =>
-      user.id === userId ? { ...user, role: newRole } : user
-    );
-    setUsersList(updatedUsers);  // оновлюємо стан без перезавантаження
-  } catch (err) {
-    setError(`Помилка оновлення ролі: ${err.message}`);
+    await UserService.deleteUser(userId);
+    setUsersList(usersList.filter(user => user.id !== userId));
+
+    // Очистити локальне сховище після видалення користувача
+    if (userId === userData.id) { // Якщо видаляється поточний авторизований користувач
+      localStorage.clear(); // Очищає все локальне сховище
+      window.location.reload(); // Перезавантажити сторінку після видалення
+    }
+  } catch (error) {
+    setError(`Помилка видалення: ${error.message}`);
   }
 };
 
+
+  const handleRoleChange = async (userId, newRole) => {
+    try {
+      // Оновлення ролі користувача
+      await UserService.updateUser(userId, { role: newRole });
+
+      // Оновлення списку користувачів
+      const updatedUsers = usersList.map(user =>
+        user.id === userId ? { ...user, role: newRole } : user
+      );
+      setUsersList(updatedUsers);
+
+      // Оновлення даних поточного користувача, якщо це поточний користувач
+      if (userData.id === userId) {
+        setUserData(prevData => ({ ...prevData, role: newRole }));
+      }
+
+      // Можна додатково викликати fetchUserData(), якщо потрібно перезавантажити дані користувача
+      // const currentUser = await UserService.getCurrentUser();
+      // setUserData(currentUser);
+
+    } catch (err) {
+      setError(`Помилка оновлення ролі: ${err.message}`);
+    }
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(prev => !prev); // Toggle password visibility
@@ -102,7 +121,6 @@ const ProfilePage = () => {
       <h2>Профіль користувача</h2>
 
       <button className="button button-primary button-back" onClick={goBack}>Назад</button>
-
 
       <div className="profile-section">
         {isEditing ? (
