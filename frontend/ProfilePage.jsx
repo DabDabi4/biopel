@@ -70,7 +70,7 @@ const ProfilePage = () => {
 
     // Очистити локальне сховище після видалення користувача
     if (userId === userData.id) { // Якщо видаляється поточний авторизований користувач
-      localStorage.clear(); // Очищає все локальне сховище
+      localStorage.removeItem("currentUser"); // Очищає все локальне сховище
       window.location.reload(); // Перезавантажити сторінку після видалення
     }
   } catch (error) {
