@@ -61,36 +61,23 @@ const ProfilePage = () => {
       return;
     }
   
-    const confirmDelete = window.confirm(
-      userToDelete.id === userData.id
-        ? 'Ви впевнені, що хочете видалити свій акаунт? Це призведе до виходу з системи.'
-        : 'Ви впевнені, що хочете видалити цього користувача?'
-    );
+    const confirmDelete = window.confirm('Ви впевнені, що хочете видалити цього користувача?');
     if (!confirmDelete) return;
   
     try {
       await UserService.deleteUser(userId);
       setUsersList(usersList.filter(user => user.id !== userId));
   
-      // Якщо видаляється не поточний користувач, але користувач, що перебуває на сайті
-      if (userToDelete.id !== userData.id) {
-        // Очистити локальне сховище користувача, якого видаляють
-        localStorage.removeItem(`user_${userToDelete.id}`);
-      } else {
-        // Якщо видаляється поточний авторизований користувач
-        localStorage.removeItem("currentUser");
-  
-        // Очистити глобальний стан користувача
-        setUserData(null);
-  
-        // Перенаправити на сторінку входу після видалення користувача
+      // Очистити локальне сховище після видалення користувача
+      if (userId === userData.id) { // Якщо видаляється поточний авторизований користувач
+        localStorage.removeItem("currentUser"); // Очищає все локальне сховище
+        setUserData(null); // Очищаємо стан користувача
         window.location.href = "/login"; // Направити на сторінку входу або іншу відповідну сторінку
       }
     } catch (error) {
       setError(`Помилка видалення: ${error.message}`);
     }
   };
-  
   
 
 
