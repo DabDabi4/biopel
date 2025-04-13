@@ -40,9 +40,9 @@ const InfoProduct = () => {
   const handleOrder = async () => {
     try {
       const currentUser = await UserService.getCurrentUser();
-      if (!currentUser) {
+      if (!currentUser || !currentUser.id) {
         alert('Будь ласка, авторизуйтесь перед оформленням замовлення!');
-        navigate('/login'); // перекидає на сторінку входу
+        navigate('/login');
         return;
       }
   
@@ -53,6 +53,7 @@ const InfoProduct = () => {
       }
     } catch (error) {
       console.error('Помилка замовлення:', error);
+      alert('Не вдалося оформити замовлення. Перевірте авторизацію.');
     }
   };
   
