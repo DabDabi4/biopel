@@ -40,15 +40,22 @@ const InfoProduct = () => {
   const handleOrder = async () => {
     try {
       const currentUser = await UserService.getCurrentUser();
+      if (!currentUser) {
+        alert('Будь ласка, авторизуйтесь перед оформленням замовлення!');
+        navigate('/login'); // перекидає на сторінку входу
+        return;
+      }
+  
       if (product) {
-        await UserFuelBracketsService.createOrder(currentUser.id, product.id); // Створюємо замовлення
+        await UserFuelBracketsService.createOrder(currentUser.id, product.id);
         alert('Замовлення успішно оформлено!');
-        navigate('/basket'); // Переходимо до кошика
+        navigate('/basket');
       }
     } catch (error) {
       console.error('Помилка замовлення:', error);
     }
   };
+  
 
   if (!product) {
     return <div>Продукт не знайдено</div>;
