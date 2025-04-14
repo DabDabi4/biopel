@@ -14,17 +14,28 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const currentUser = await UserService.getCurrentUser();
-        setUserData(currentUser);
+        // Отримуємо збережені локальні дані користувача
+        const localUser = JSON.parse(localStorage.getItem("currentUser"));
+  
+        if (!localUser || !localUser.id) {
+          throw new Error('Користувач не знайдений у localStorage.');
+        }
+  
+        // Запитуємо актуальні дані з бази по ID
+        const freshUserData = await UserService.getUserById(localUser.id);
+        if (!freshUserData) {
+          throw new Error('Користувач не знайдений у базі даних.');
+        }
+  
+        setUserData(freshUserData);
         setEditData({
-          username: currentUser.username,
-          email: currentUser.email,
-          password: currentUser.password
+          username: freshUserData.username,
+          email: freshUserData.email,
+          password: freshUserData.password
         });
-
-        if (currentUser.role === 'admin') {
+  
+        if (freshUserData.role === 'admin') {
           const allUsers = await UserService.getAllUsers();
-          // Sort users by ID in ascending order
           const sortedUsers = allUsers.sort((a, b) => a.id - b.id);
           setUsersList(sortedUsers);
         }
@@ -34,9 +45,10 @@ const ProfilePage = () => {
         setLoading(false);
       }
     };
-
+  
     fetchUserData();
   }, []);
+  
 
   const handleEditChange = (e) => {
     const { name, value } = e.target;
