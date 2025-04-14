@@ -128,7 +128,14 @@ const ProfilePage = () => {
 
   if (loading) return <div className="loading">Завантаження...</div>;
   if (error) return <div className="error-message">{error}</div>;
-  if (!userData) return <div className="error-message">Користувач не знайдений або не авторизований.</div>;
+  if (!userData) {
+    return (
+      <div className="error-message">
+        Ви не авторизовані. Будь ласка, <a href="/login">увійдіть у систему</a>, щоб переглянути профіль.
+      </div>
+    );
+  }
+  
 
   return (
     <div className="profile-page-container">
