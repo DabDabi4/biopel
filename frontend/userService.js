@@ -93,6 +93,17 @@ async getCurrentUser() {
     throw new Error('Користувач не авторизований');
   }
   return user;
+},
+// Ось новий метод:
+getUserById: async (id) => {
+  const { data, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) throw new Error('Користувача не знайдено');
+  return data;
 }
 
 };
