@@ -90,11 +90,11 @@ const InfoProduct = () => {
         <div className="info-product-content">
           <div className="info-product-description">
             <p>Постачальник: {product.supplier}</p>
-            <p>Ціна: {product.price} грн</p>
+            <p>Ціна: {product.price} грн/кг</p>
             <p>Калорійність: {product.calorific_value}</p>
 
             <div className="info-product-price-section">
-              <h3>Ціна: <span className="price-value">{product.price} грн</span></h3>
+              <h3>Ціна: <span className="price-value">{product.price} грн/кг</span></h3>
             </div>
 
             <div className="info-product-actions">
@@ -128,7 +128,7 @@ const InfoProduct = () => {
                 </tr>
                 <tr>
                   <td>Ціна</td>
-                  <td>{product.price} грн</td>
+                  <td>{product.price} грн/кг</td>
                 </tr>
                 <tr>
                   <td>Постачальник</td>
