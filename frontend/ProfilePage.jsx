@@ -18,7 +18,7 @@ const ProfilePage = () => {
         const localUser = JSON.parse(localStorage.getItem("currentUser"));
   
         if (!localUser || !localUser.id) {
-          throw new Error('Користувач не знайдений у localStorage.');
+          throw new Error('Користувач не знайдений.');
         }
   
         // Запитуємо актуальні дані з бази по ID
@@ -118,6 +118,12 @@ const ProfilePage = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("currentUser");
+    window.location.href = "/login"; // або '/' якщо в тебе немає сторінки входу
+  };
+  
+
   const togglePasswordVisibility = () => {
     setShowPassword(prev => !prev); // Toggle password visibility
   };
@@ -191,7 +197,9 @@ const ProfilePage = () => {
                 </tr>
               </tbody>
             </table>
+            
             <button className="button button-primary" onClick={() => setIsEditing(true)}>Редагувати</button>
+            <button className="button button-secondary" onClick={handleLogout}>Вийти</button>
           </div>
         )}
       </div>
