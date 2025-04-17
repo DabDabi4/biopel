@@ -110,11 +110,12 @@ const StorePage = () => {
           </div>
         ))}
   
-        {userRole !== 'user' && (
-          <div className="data-div empty-block" onClick={handleAddProduct}>
-            <p style={{ fontSize: '80px' }}>+</p>
-          </div>
-        )}
+  {userRole === 'admin' && (
+  <div className="data-div empty-block" onClick={handleAddProduct}>
+    <p style={{ fontSize: '80px' }}>+</p>
+  </div>
+)}
+
       </div>
     </div>
   );
