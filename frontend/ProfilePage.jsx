@@ -120,7 +120,7 @@ const ProfilePage = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("currentUser");
-    window.location.href = "/loginPage"; // або '/' якщо в тебе немає сторінки входу
+    window.location.href = "/infoPage"; // або '/' якщо в тебе немає сторінки входу
   };
   
 
